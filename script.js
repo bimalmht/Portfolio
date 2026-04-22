@@ -65,3 +65,21 @@ function updateAvailability() {
 
 // Run it when the page loads
 updateAvailability();
+const toggleBtn = document.getElementById('darkModeToggle');
+const html = document.documentElement;
+
+// Check for saved user preference
+if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    html.classList.add('dark');
+}
+
+toggleBtn.addEventListener('click', () => {
+    html.classList.toggle('dark');
+    
+    // Save preference
+    if (html.classList.contains('dark')) {
+        localStorage.setItem('theme', 'dark');
+    } else {
+        localStorage.setItem('theme', 'light');
+    }
+});
