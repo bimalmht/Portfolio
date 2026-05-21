@@ -86,9 +86,6 @@ toggleBtn.addEventListener('click', () => {
 // ==========================================
 // DYNAMIC CLOUDFLARE D1 CONTACT FORM HANDLER
 // ==========================================
-// ==========================================
-// DYNAMIC CLOUDFLARE D1 CONTACT FORM HANDLER
-// ==========================================
 document.addEventListener("DOMContentLoaded", () => {
   // Target the form explicitly using its new ID attribute
   const contactForm = document.getElementById("portfolioContactForm");
@@ -117,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       try {
         // 4. Asynchronously stream data straight to your compiled serverless route
-        const response = await fetch("/contact", {
+        const response = await fetch("/api/contact", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -156,7 +153,7 @@ async function loadDynamicProjects() {
 
   try {
     // 1. Fetch live project datasets from the Cloudflare API layer
-    const response = await fetch("/projects");
+    const response = await fetch("/api/projects");
     if (!response.ok) throw new Error("Failed to retrieve projects");
     
     const projects = await response.json();
