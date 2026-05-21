@@ -1,0 +1,36 @@
+/* style.css - Minimal Version */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Make the scrollbar thin and cyan to match your theme */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+    background: #0ea5e9;
+    border-radius: 10px;
+}
+/* Add this to style.css */
+.dark body {
+    background-color: #020617; /* slate-950 */
+    color: #f8fafc; /* slate-50 */
+}
+
+.dark nav {
+    background-color: rgba(15, 23, 42, 0.8); /* slate-900 with blur */
+    border-color: #1e293b; /* slate-800 */
+}
+
+.dark section#about, 
+.dark section#work {
+    background-color: #0f172a; /* slate-900 */
+}
+
+.dark .bg-white {
+    background-color: #1e293b !important; /* slate-800 for cards */
+    border-color: #334155 !important;
+}

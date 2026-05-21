@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bimal Mahato | Full Stack Developer & Data Architect</title>
+    <meta name="title" content="Bimal Mahato | Full Stack Developer & Data Architect">
+    <meta name="description"
+        content="Lead at Bimal & Friends IT Zone. Specialized in Data Lakes, Full-Stack Development, Graphic Design, and UGC in Nepal.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bimalmht.github.io/Portfolio/">
+    <meta property="og:title" content="Bimal Mahato | Full Stack Developer & Data Architect">
+    <meta property="og:description"
+        content="Transforming raw data into seamless digital experiences. Lead at Bimal & Friends IT Zone.">
+    <meta property="og:image" content="./images/Logo.png">
+
+    <link rel="icon" type="image/png" href="./images/Logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .dots-bg {
+            background-image: radial-gradient(rgba(14, 165, 233, 0.1) 1.5px, transparent 1.5px);
+            background-size: 32px 32px;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 selection:bg-cyan-100 selection:text-cyan-900">
+
+    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <img src="./images/Logo.png" alt="Logo"
+                    class="h-20 w-auto transition-transform hover:scale-105 dark:brightness-0 dark:invert">
+                <!-- class="h-20 w-auto mix-blend-multiply hover:scale-105 transition-transform"> -->
+                <!-- <span class="hidden md:block font-extrabold text-xl tracking-tight text-slate-800">IT <span class="text-cyan-600">ZONE</span></span> -->
+            </div>
+            <ul class="flex items-center gap-8 font-semibold text-sm text-slate-600 dark:text-slate-300">
+                <li><a href="#home" class="hover:text-cyan-600 transition-colors">Home</a></li>
+                <li><a href="#about" class="hover:text-cyan-600 transition-colors">About</a></li>
+                <li class="flex items-center">
+                    <button id="darkModeToggle"
+                        class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-yellow-400 transition-all hover:scale-110 active:scale-95"
+                        aria-label="Toggle Dark Mode">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden dark:block" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M16.95 16.95l.707.707M7.05 7.05l.707.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 block dark:hidden" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                        </svg>
+                    </button>
+                </li>
+                <li><a href="#contact"
+                        class="px-5 py-2.5 bg-slate-900 text-white rounded-full hover:bg-cyan-600 transition-all shadow-lg shadow-slate-200">Contact</a>
+                </li>
+            </ul>
+        </div>
+
+    </nav>
+
+    <section id="home" class="relative min-h-screen pt-32 pb-20 flex items-center overflow-hidden">
+        <div class="absolute inset-0 dots-bg z-0"></div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10 grid md:grid-cols-2 gap-16 items-center">
+            <div class="order-2 md:order-1 text-center md:text-left">
+                <div class="flex items-center gap-3 mb-6 animate-in fade-in slide-in-from-top-4 duration-1000">
+                    <span class="relative flex h-3 w-3">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                    </span>
+                    <span class="text-sm font-bold tracking-widest uppercase text-emerald-600/80">
+                        Available for Q2 Projects
+                    </span>
+                </div>
+                <h1 class="text-5xl lg:text-7xl font-extrabold text-slate-900 leading-[1.1] mb-6">
+
+                    <h1 class="text-5xl lg:text-7xl font-extrabold text-slate-900 dark:text-white leading-[1.1] mb-6">
+                        Hi, I'm <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600">Bimal
+                            Mahato</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-10 leading-relaxed max-w-xl">
+                        Full-Stack Developer and Data Architect. Leading <strong>Bimal & Friends IT Zone</strong> to
+                        build
+                        scalable digital ecosystems with Django and React.
+                    </p>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                        <a href="https://www.fiverr.com/bimalmht?public_mode=true"
+                            class="px-8 py-4 bg-cyan-600 text-white rounded-2xl font-bold shadow-xl shadow-cyan-200 hover:bg-cyan-700 hover:-translate-y-1 transition-all">Start
+                            a Project</a>
+                        <a href="https://github.com/bimalmht" target="_blank" rel="noopener noreferrer"
+                            class="px-8 py-4 bg-white border dark:text-slate-400 border-slate-200 text-slate-700 rounded-2xl font-bold hover:bg-slate-50 transition-all">View
+                            GitHub</a>
+                        <a href="./assets/CV_Bimal Mahato-IT_18_yrs.pdf" download="Bimal_Mahato_CV"
+                            class="px-8 py-4 bg-white border dark:text-slate-400 border-slate-200 text-slate-700 rounded-2xl font-bold hover:bg-slate-50 hover:-translate-y-1 transition-all flex items-center gap-2 shadow-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-600" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download CV
+                        </a>
+                    </div>
+
+                    <div
+                        class="mt-12 flex justify-center md:justify-start items-center gap-6 opacity-60 grayscale hover:grayscale-0 transition-all">
+                        <img src="https://img.icons8.com/color/48/python.png" class="h-8" title="Python/Django">
+                        <img src="https://img.icons8.com/officel/40/react.png" class="h-8" title="React">
+                        <img src="https://img.icons8.com/color/48/flutter.png" class="h-8" title="Flutter">
+                        <img src="./images/PowerBI.png" class="h-8" title="Power BI">
+                    </div>
+            </div>
+
+            <div class="order-1 md:order-2 flex justify-center">
+                <div class="relative group">
+                    <div
+                        class="absolute -inset-4 bg-gradient-to-tr from-cyan-400 to-blue-500 rounded-[2rem] blur-2xl opacity-20 group-hover:opacity-40 transition duration-1000">
+                    </div>
+                    <div class="relative bg-white p-4 rounded-[2.5rem] shadow-2xl">
+                        <img src="./images/Bimal Mahato.jpg" alt="Bimal Mahato"
+                            class="w-64 h-64 md:w-96 md:h-96 object-cover rounded-[2rem]">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-24 bg-white">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-extrabold dark:text-slate-400 mb-4 text-slate-900">The Architect
+                    Mindset</h2>
+                <div class="h-1.5 w-20 bg-cyan-600 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid md:grid-cols-5 gap-12 items-start">
+                <div class="md:col-span-3 space-y-6 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                    <p>
+                        I specialize in bridging the gap between raw data, creative storytelling, and seamless user
+                        experiences. In 2026, I achieved a career milestone by implementing the <strong>first Data Lake
+                            in Nepal</strong>, revolutionizing enterprise data strategy.
+                    </p>
+                    <p>
+                        As the lead at <strong>Bimal & Friends IT Zone</strong>, my vision extends beyond the code. I am
+                        a <strong>Graphic Designer and UGC Creator</strong> who understands that a product's success
+                        depends on its identity. From high-converting <strong>Product Labels</strong> to engaging
+                        digital content, I ensure every project is as beautiful as it is functional.
+                    </p>
+                </div>
+
+                <div class="md:col-span-2 flex flex-wrap gap-3">
+                    <div class="w-full mb-2">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400">Technical Core</h3>
+                    </div>
+                    <span
+                        class="px-4 py-2 bg-slate-100 rounded-lg text-slate-700 font-semibold text-sm border border-slate-200">Data
+                        Architecture</span>
+                    <span
+                        class="px-4 py-2 bg-slate-100 rounded-lg text-slate-700 font-semibold text-sm border border-slate-200">Full
+                        Stack Dev</span>
+
+                    <div class="w-full mt-4 mb-2">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400">Creative & Content</h3>
+                    </div>
+                    <span
+                        class="px-4 py-2 bg-cyan-50 text-cyan-700 rounded-lg font-bold text-sm border border-cyan-100 ring-1 ring-cyan-200">Graphic
+                        Design</span>
+                    <span
+                        class="px-4 py-2 bg-cyan-50 text-cyan-700 rounded-lg font-bold text-sm border border-cyan-100 ring-1 ring-cyan-200">UGC
+                        Content</span>
+                    <span
+                        class="px-4 py-2 bg-cyan-50 text-cyan-700 rounded-lg font-bold text-sm border border-cyan-100 ring-1 ring-cyan-200">Product
+                        Label Design</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="creative-hub" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="mb-16 text-center md:text-left">
+                <h2 class="text-3xl md:text-5xl font-extrabold mb-4 text-slate-900 tracking-tight text-center">Creative
+                    Studio</h2>
+                <p class="text-lg text-slate-600 max-w-2xl mx-auto text-center">Merging technical architecture with
+                    visual storytelling, from brand design to AI-powered 3D product ads design.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
+                <div
+                    class="group relative bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-slate-200">
+                    <div class="aspect-[4/5] overflow-hidden">
+                        <img src="./images/Strawberry Shake  Label Design  (1).png" alt="Product Label"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+                        <span class="text-cyan-400 text-xs font-bold uppercase tracking-widest mb-2">Graphic
+                            Design</span>
+                        <h3 class="text-white text-xl font-bold">Product Label Design</h3>
+                    </div>
+                </div>
+
+                <div
+                    class="group relative bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-slate-200">
+                    <div class="aspect-[4/5] overflow-hidden">
+                        <img src="./images/Dove product ad (1).png" alt="Branding Work"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+                        <span class="text-cyan-400 text-xs font-bold uppercase tracking-widest mb-2">Social Media</span>
+                        <h3 class="text-white text-xl font-bold">Brand Identity Visuals</h3>
+                    </div>
+                </div>
+
+                <div
+                    class="group relative bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-slate-200">
+                    <div class="aspect-[4/5] overflow-hidden">
+                        <img src="./images/Fried Rice.jpg" alt="UGC Photography"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+                        <span class="text-cyan-400 text-xs font-bold uppercase tracking-widest mb-2">UGC Content</span>
+                        <h3 class="text-white text-xl font-bold">Product Storytelling</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-12">
+                <div class="flex items-center gap-4">
+                    <div class="h-[1px] flex-grow bg-slate-200"></div>
+                    <h3 class="text-xl font-bold text-slate-400 uppercase tracking-[0.2em]">3D Animation Gallery</h3>
+                    <div class="h-[1px] flex-grow bg-slate-200"></div>
+                </div>
+
+                <section id="creative-studio" class="py-24 bg-white dark:bg-slate-950 transition-colors">
+                    <div class="max-w-7xl mx-auto px-6">
+                        <div class="mb-16 text-center">
+                            <!-- <h2 class="text-3xl md:text-5xl font-extrabold mb-4 text-slate-900 dark:text-white">Creative
+                                Studio</h2> -->
+                            <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                                My AI-Orchestrated Production Pipeline for 3D Animation and Digital Storytelling.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+
+                            <div
+                                class="p-8 rounded-[2rem] bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-cyan-500/20 hover:border-cyan-500 transition-all group">
+                                <div
+                                    class="w-12 h-12 mb-6 flex items-center justify-center bg-blue-100 dark:bg-blue-900/30 rounded-xl">
+                                    <img src="./images/Gemini_icon.png" alt="Gemini" class="w-8 h-8">
+                                </div>
+                                <h3 class="text-xl font-bold mb-3 dark:text-white">Scripting</h3>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">Using <strong>Gemini 3
+                                        Flash</strong> for multi-act scripts, character personas, and high-density
+                                    prompt engineering.</p>
+                            </div>
+
+                            <div
+                                class="p-8 rounded-[2rem] bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-cyan-500/20 hover:border-cyan-500 transition-all group">
+                                <div
+                                    class="w-12 h-12 mb-6 flex items-center justify-center bg-indigo-100 dark:bg-indigo-900/30 rounded-xl">
+                                    <svg class="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-bold mb-3 dark:text-white">Visual Flow</h3>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">Leveraging <strong>Flow</strong>
+                                    to orchestrate scene transitions and maintain visual consistency across the
+                                    timeline.</p>
+                            </div>
+
+                            <div
+                                class="p-8 rounded-[2rem] bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-cyan-500/20 hover:border-cyan-500 transition-all group">
+                                <div
+                                    class="w-12 h-12 mb-6 flex items-center justify-center bg-purple-100 dark:bg-purple-900/30 rounded-xl">
+                                    <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-bold mb-3 dark:text-white">Whisk Rendering</h3>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">Utilizing <strong>Whisk</strong>
+                                    for AI-driven 3D style transfer and high-fidelity texture generation.</p>
+                            </div>
+                            <div
+                                class="p-8 rounded-[2rem] bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-cyan-500/20 hover:border-cyan-500 transition-all group">
+                                <div
+                                    class="w-12 h-12 mb-6 flex items-center justify-center bg-blue-50 dark:bg-blue-900/20 rounded-xl">
+                                    <img src="https://img.icons8.com/color/48/canva.png" alt="Canva">
+                                </div>
+                                <h3 class="text-xl font-bold mb-3 dark:text-white">Asset Design</h3>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">Designing high-end
+                                    <strong>Canva</strong> overlays, UI elements, and custom thumbnails to enhance the
+                                    visual storytelling experience.
+                                </p>
+                            </div>
+                            <div
+                                class="p-8 rounded-[2rem] bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-cyan-500/20 hover:border-cyan-500 transition-all group">
+                                <div
+                                    class="w-12 h-12 mb-6 flex items-center justify-center bg-slate-200 dark:bg-slate-800 rounded-xl">
+                                    <img src="https://img.icons8.com/ios-filled/50/ffffff/video-editing.png"
+                                        class="h-6 dark:invert-0 invert" alt="CapCut">
+                                </div>
+                                <h3 class="text-xl font-bold mb-3 dark:text-white">Post-Production</h3>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">Final mastering in
+                                    <strong>CapCut</strong> for high-retention social media cuts and engagement
+                                    optimization.
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div class="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm">
+                        <div class="relative aspect-video bg-slate-900 rounded-[1.5rem] overflow-hidden shadow-lg mb-6">
+                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/XdnJMv1YOxw"
+                                frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <div class="px-2">
+                            <h4 class="text-2xl dark:text-slate-400 font-extrabold text-slate-900 mb-3">Aryan & Golu:
+                                Episode 01</h4>
+                            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 mb-4">
+                                <p class="text-xs font-bold text-cyan-600 uppercase mb-1">Director's Note</p>
+                                <p class="text-sm text-slate-600 italic">Exploring character consistency in Nepali
+                                    storytelling. Built using Gemini for script-writing and Luma Dream Machine for video
+                                    generation.</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <span
+                                    class="px-3 py-1 bg-slate-100 text-[10px] font-bold text-slate-500 rounded-lg">AI-VIDEO</span>
+                                <span
+                                    class="px-3 py-1 bg-slate-100 text-[10px] font-bold text-slate-500 rounded-lg">3D-RENDER</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm">
+                        <div class="relative aspect-video bg-slate-900 rounded-[1.5rem] overflow-hidden shadow-lg mb-6">
+                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/BzLIbWzm1Ok"
+                                frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <div class="px-2">
+                            <h4 class="text-2xl font-extrabold dark:text-slate-400 text-slate-900 mb-3">Cinematic
+                                Product Storytelling</h4>
+                            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 mb-4">
+                                <p class="text-xs font-bold text-cyan-600 uppercase mb-1">Director's Note</p>
+                                <p class="text-sm text-slate-600 italic">Applying data-driven marketing to UGC reels.
+                                    High-energy cuts designed to maximize viewer retention on social platforms.</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="px-3 py-1 bg-slate-100 text-[10px] font-bold text-slate-500 rounded-lg">UGC
+                                    REEL</span>
+                                <span class="px-3 py-1 bg-slate-100 text-[10px] font-bold text-slate-500 rounded-lg">4K
+                                    QUALITY</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="work" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-16">
+                <h2 class="text-4xl font-extrabold dark:text-slate-400 text-slate-900 mb-4 text-center">Featured Work
+                </h2>
+                <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-center">
+                    A collection of systems and analytics projects led in the Nepali IT sector.
+                </p>
+            </div>
+
+            <!-- The JavaScript will dynamically inject cards directly into this div wrapper -->
+            <div id="featured-work-container" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Loading state placeholder -->
+                <p class="text-center text-slate-400 col-span-full">Loading featured projects...</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-24 dots-bg">
+        <div class="max-w-3xl mx-auto px-6 bg-white p-8 md:p-12 rounded-[2.5rem] shadow-xl border border-slate-100">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-extrabold dark:text-slate-400 mb-2 text-slate-900">Let's Build Something Great
+                </h2>
+                <p class="text-slate-500">I'm currently accepting new freelance projects and consulting roles.</p>
+            </div>
+
+            <form id="portfolioContactForm" class="space-y-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <input type="text" id="contactName" name="name" placeholder="Full Name" required
+                        class="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white transition-all text-slate-900 placeholder:text-slate-400">
+                    <input type="email" id="contactEmail" name="email" placeholder="Email Address" required
+                        class="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white transition-all text-slate-900 placeholder:text-slate-400">
+                </div>
+
+                <textarea id="contactMessage" name="message" placeholder="Tell me about your project..." rows="5"
+                    required
+                    class="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white transition-all text-slate-900 placeholder:text-slate-400"></textarea>
+
+                <button type="submit" id="submitBtn"
+                    class="w-full py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-cyan-600 shadow-xl shadow-slate-200 transition-all active:scale-[0.98]">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="py-12 text-center border-t border-slate-100">
+        <p class="text-slate-400 text-sm font-medium">© 2026 Bimal Mahato. Engineered in Nepal.</p><br>
+        <div class="flex justify-center items-center gap-8">
+            <a href="https://www.facebook.com/enftek" target="_blank" rel="noopener noreferrer"
+                class="text-slate-400 hover:text-[#1877F2] transition-all transform hover:-translate-y-1"
+                title="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                </svg>
+            </a>
+
+            <a href="https://www.youtube.com/@HASTORYTELLERCARTOON" target="_blank" rel="noopener noreferrer"
+                class="text-slate-400 hover:text-[#FF0000] transition-all transform hover:-translate-y-1"
+                title="YouTube">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                        d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17">
+                    </path>
+                    <path d="m10 15 5-3-5-3z"></path>
+                </svg>
+            </a>
+
+            <a href="https://x.com/Bimalmht" target="_blank" rel="noopener noreferrer"
+                class="text-slate-400 hover:text-[#000000] transition-all transform hover:-translate-y-1"
+                title="Twitter / X">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4l11.733 16h4.267l-11.733 -16z" />
+                    <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
+                </svg>
+            </a>
+
+            <a href="https://linkedin.com/in/bimalmht" target="_blank" rel="noopener noreferrer"
+                class="text-slate-400 hover:text-[#0077B5] transition-all transform hover:-translate-y-1"
+                title="LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                    <rect width="4" height="12" x="2" y="9"></rect>
+                    <circle cx="4" cy="4" r="2"></circle>
+                </svg>
+            </a>
+
+            <a href="https://www.fiverr.com/bimalmht" target="_blank" rel="noopener noreferrer"
+                class="text-slate-400 hover:text-[#1dbf73] transition-all transform hover:-translate-y-1"
+                title="Fiverr">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M15 9h-3a2 2 0 0 0-2 2v2"></path>
+                    <path d="M10 11h4"></path>
+                </svg>
+            </a>
+        </div>
+    </footer>
+    <div id="projectModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeModal()"></div>
+
+        <div
+            class="relative bg-white w-full max-w-2xl rounded-[2rem] overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-300">
+            <button onclick="closeModal()" aria-label="Close Modal"
+                class="absolute top-6 right-6 z-10 bg-slate-100 hover:bg-slate-200 p-2 rounded-full transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-600" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <!-- <div id="modalImage" class="h-64 bg-cover bg-center"></div> -->
+
+            <div class="h-64 flex items-center justify-center bg-slate-50 p-10 border-b border-slate-100">
+                <img id="modalImgTag" src="" alt="Project Icon" class="max-h-full max-w-full object-contain">
+            </div>
+
+            <div class="p-8 md:p-10">
+                <div class="flex items-center gap-2 mb-4">
+                    <span id="modalCategory"
+                        class="px-3 py-1 bg-cyan-100 text-cyan-600 text-xs font-bold rounded-full uppercase tracking-wider"></span>
+                </div>
+                <h3 id="modalTitle" class="text-3xl dark:text-slate-400 font-extrabold text-slate-900 mb-4"></h3>
+                <p id="modalDescription" class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6"></p>
+
+                <div class="grid grid-cols-2 gap-6 pt-6 border-t border-slate-100">
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Tech Stack</h4>
+                        <div id="modalStack" class="flex flex-wrap gap-2"></div>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Key Result</h4>
+                        <p id="modalResult" class="text-sm dark:text-slate-400 font-semibold text-slate-700"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./script.js"></script>
+</body>
+
+</html>
