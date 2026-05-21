@@ -86,29 +86,37 @@ toggleBtn.addEventListener('click', () => {
 // ==========================================
 // DYNAMIC CLOUDFLARE D1 CONTACT FORM HANDLER
 // ==========================================
+// ==========================================
+// DYNAMIC CLOUDFLARE D1 CONTACT FORM HANDLER
+// ==========================================
 document.addEventListener("DOMContentLoaded", () => {
-  const contactForm = document.querySelector('form[action*="formspree.io"]');
+  // Target the form explicitly using its new ID attribute
+  const contactForm = document.getElementById("portfolioContactForm");
 
   if (contactForm) {
     contactForm.addEventListener("submit", async (e) => {
-      // 1. Prevent the page from reloading or redirecting to Formspree
+      // 1. Intercept standard form browser reload behaviors
       e.preventDefault();
 
-      // 2. Find the submit button and show a loading state
-      const submitBtn = contactForm.querySelector('button[type="submit"]');
-      const originalBtnText = submitBtn.innerHTML;
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = "Sending Message...";
+      // 2. Locate the submit action element and activate loading feedback state
+      const submitBtn = document.getElementById("submitBtn");
+      let originalBtnText = "Send Message";
+      
+      if (submitBtn) {
+        originalBtnText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = "Sending Message...";
+      }
 
-      // 3. Gather form field inputs dynamically
+      // 3. Extract parameter values explicitly using your precise HTML field IDs
       const formData = {
-        name: contactForm.querySelector('input[name="name"]').value,
-        email: contactForm.querySelector('input[name="email"]').value,
-        message: contactForm.querySelector('textarea[name="message"]').value,
+        name: document.getElementById("contactName").value,
+        email: document.getElementById("contactEmail").value,
+        message: document.getElementById("contactMessage").value
       };
 
       try {
-        // 4. Dispatch payload securely to your serverless Cloudflare Workers route
+        // 4. Asynchronously stream data straight to your compiled serverless route
         const response = await fetch("/contact", {
           method: "POST",
           headers: {
@@ -118,21 +126,22 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         if (response.ok) {
-          // 5. Success behavior: clear form and notify sender
+          // 5. Clear inputs and notify sender upon successful D1 insert verification
           alert("Thanks, Bimal will look into this shortly!");
           contactForm.reset();
         } else {
           const errorText = await response.text();
-          throw new Error(errorText || "Server error occurred");
+          throw new Error(errorText || "Server logging failure encountered.");
         }
       } catch (error) {
-        // 6. Handle errors cleanly without crashing the UI
         console.error("Submission failed:", error);
         alert("Oops! Something went wrong. Please try again later.");
       } finally {
-        // 7. Restore submit button functionality
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalBtnText;
+        // 6. Release button lock mechanisms and restore native UI styling states
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+        }
       }
     });
   }
