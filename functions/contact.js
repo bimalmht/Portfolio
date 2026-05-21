@@ -2,28 +2,29 @@ export async function onRequestPost(context) {
   try {
     const { env, request } = context;
     
-    // 1. Parse the incoming JSON body from script.js
+    // 1. Extract the raw submission payload
     const body = await request.json();
-    const { name, email, message } = body;
+    
+    // 2. Fallback normalization to catch both lowercase and uppercase object keys safely
+    const name = body.name || body.Name || body.NAME;
+    const email = body.email || body.Email || body.EMAIL;
+    const message = body.message || body.Message || body.MESSAGE;
 
-    // 2. Perform backend validation check
+    // 3. Validation safeguard check
     if (!name || !email || !message) {
-      return new Response("Missing required fields", { status: 400 });
+      return new Response("Validation Failure: Empty properties received.", { status: 400 });
     }
 
-    // 3. Inject form inputs into your cloud D1 SQL instance securely 
-    // Using bindings (?) prevents malicious SQL injection attacks
+    // 4. Secure parameterized insertion directly into SQLite matrix
     await env.DB.prepare(
       "INSERT INTO messages (name, email, message) VALUES (?, ?, ?)"
     ).bind(name, email, message).run();
 
-    // 4. Return success response to the client browser UI
-    return new Response(JSON.stringify({ success: true, msg: "Message recorded successfully!" }), {
+    return new Response(JSON.stringify({ success: true, msg: "Transaction recorded." }), {
       headers: { "Content-Type": "application/json" },
       status: 200
     });
   } catch (err) {
-    // Return standard error payload if operation hits database snags
     return new Response(JSON.stringify({ error: err.message }), { 
       headers: { "Content-Type": "application/json" },
       status: 500 
