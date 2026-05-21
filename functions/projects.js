@@ -1,36 +1,28 @@
-// Keep your existing GET handler intact
-export async function onRequestGet(context) {
-  try {
-    const { env } = context;
-    const { results } = await env.DB.prepare("SELECT * FROM projects ORDER BY id ASC").all();
-    return new Response(JSON.stringify(results), {
-      headers: { "Content-Type": "application/json", "Cache-Control": "public, max-age=10" },
-      status: 200
-    });
-  } catch (err) {
-    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
-  }
-}
-
-// Add this new POST method to process new project additions safely
+// Overwrite your existing onRequestPost inside functions/projects.js to sanitize typos automatically
 export async function onRequestPost(context) {
   try {
     const { env, request } = context;
     const clientToken = request.headers.get("Authorization");
 
-    // Authenticate the publish request
     if (!clientToken || clientToken !== env.ADMIN_TOKEN) {
-      return new Response("Unauthorized insertion request denied", { status: 401 });
+      return new Response("Unauthorized", { status: 401 });
     }
 
     const body = await request.json();
-    const { modal_id, image_path, category, title } = body;
+    let { modal_id, image_path, category, title } = body;
 
     if (!modal_id || !image_path || !category || !title) {
       return new Response("Missing parameters", { status: 400 });
     }
 
-    // Insert the records cleanly into SQLite
+    // TYPO SAFEGUARD: Automatically strips leading dots if typed by accident
+    if (image_path.startsWith('./')) {
+      image_path = image_path.substring(1); // Converts './images/...' to '/images/...'
+    } else if (!image_path.startsWith('/')) {
+      image_path = '/' + image_path;        // Ensures it always starts with an absolute root slash
+    }
+
+    // Execute the database insert securely
     await env.DB.prepare(
       "INSERT INTO projects (modal_id, image_path, category, title) VALUES (?, ?, ?, ?)"
     ).bind(modal_id, image_path, category, title).run();
