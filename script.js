@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       try {
         // 4. Dispatch payload securely to your serverless Cloudflare Workers route
-        const response = await fetch("/api/contact", {
+        const response = await fetch("/contact", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -147,7 +147,7 @@ async function loadDynamicProjects() {
 
   try {
     // 1. Fetch live project datasets from the Cloudflare API layer
-    const response = await fetch("/api/projects");
+    const response = await fetch("/projects");
     if (!response.ok) throw new Error("Failed to retrieve projects");
     
     const projects = await response.json();
