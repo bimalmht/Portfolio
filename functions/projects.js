@@ -1,11 +1,11 @@
-// 1. GET ROUTE: Fetches projects to display on your homepage
+// 1. GET ROUTE: Fetches ALL project data to display on your homepage and modals
 export async function onRequestGet(context) {
   try {
     const { env } = context;
     
-    // Fetch rows from D1 SQLite
+    // CHANGED: Added desc, stack, and result to the SQL selection matrix
     const { results } = await env.DB.prepare(
-      "SELECT id, modal_id, image_path, category, title FROM projects ORDER BY id ASC"
+      "SELECT id, modal_id, image_path, category, title, desc, stack, result FROM projects ORDER BY id ASC"
     ).all();
 
     return new Response(JSON.stringify(results), {
@@ -23,7 +23,7 @@ export async function onRequestGet(context) {
   }
 }
 
-// 2. POST ROUTE: Adds new projects from your admin panel
+// 2. POST ROUTE: Adds new projects including deep case details from your admin panel
 export async function onRequestPost(context) {
   try {
     const { env, request } = context;
@@ -39,9 +39,14 @@ export async function onRequestPost(context) {
     let image_path = body.image_path;
     let category = body.category;
     let title = body.title;
+    
+    // --- NEW MODAL PARAMETERS EXTRACTED HERE ---
+    let desc = body.desc;
+    let stack = body.stack;
+    let result = body.result;
 
     if (!modal_id || !image_path || !category || !title) {
-      return new Response("Missing parameters", { status: 400 });
+      return new Response("Missing basic parameters", { status: 400 });
     }
 
     // Auto-correct image path formats if typed with a relative dot by accident
@@ -51,10 +56,10 @@ export async function onRequestPost(context) {
       image_path = '/' + image_path;
     }
 
-    // Secure database execution loop
+    // CHANGED: Extended structural SQL insertion logic to register the 3 missing items 
     await env.DB.prepare(
-      "INSERT INTO projects (modal_id, image_path, category, title) VALUES (?, ?, ?, ?)"
-    ).bind(modal_id, image_path, category, title).run();
+      "INSERT INTO projects (modal_id, image_path, category, title, desc, stack, result) VALUES (?, ?, ?, ?, ?, ?, ?)"
+    ).bind(modal_id, image_path, category, title, desc, stack, result).run();
 
     return new Response(JSON.stringify({ success: true }), { 
       headers: { "Content-Type": "application/json" },
