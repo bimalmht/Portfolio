@@ -10,41 +10,56 @@ document.addEventListener("DOMContentLoaded", () => {
     if (projectForm) {
         projectForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const token = document.getElementById('adminToken').value;
             
-            const fileInput = document.getElementById('imageFile');
-            const file = fileInput.files[0];
-            
-            // Helper function to read file asynchronously as a Base64 string
-            const toBase64 = file => new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
-            });
+            // 1. Safe Element Guard Checking Function
+            const getFormElement = (id) => {
+                const el = document.getElementById(id);
+                if (!el) {
+                    throw new Error(`DOM Element Mismatch: The element with id="${id}" was not found in your admin.html form structure.`);
+                }
+                return el;
+            };
 
             try {
-                let finalImagePath = "";
+                // 2. Validate token availability safely
+                const token = getFormElement('adminToken').value;
+
+                // 3. Extract and check file target structures
+                const fileInput = getFormElement('imageFile');
+                const file = fileInput.files[0];
                 
-                if (file) {
-                    // Check file size (Optional: alert user if it exceeds 1MB to prevent D1 storage bloat)
-                    if (file.size > 1024 * 1024) { 
-                        alert("Image is too large. Please compress your image below 1MB.");
-                        return;
-                    }
-                    finalImagePath = await toBase64(file); // This converts file to "data:image/png;base64,iVBORw..."
+                if (!file) {
+                    alert("Validation Error: Please select an asset image file to upload first.");
+                    return;
                 }
 
+                if (file.size > 1024 * 1024) { 
+                    alert("File Warning: Image exceeds 1MB threshold. Please optimize or compress your graphic asset.");
+                    return;
+                }
+
+                // File converter utility execution wrapper
+                const toBase64 = fileObj => new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(fileObj);
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = error => reject(error);
+                });
+
+                const finalImagePath = await toBase64(file);
+
+                // 4. Securely extract values checking each element step by step
                 const payload = {
-                    modal_id: document.getElementById('modalId').value,
-                    image_path: finalImagePath, // Sending the full Base64 string to your projects.js API
-                    category: document.getElementById('category').value,
-                    title: document.getElementById('title').value,
-                    desc: document.getElementById('projectDesc').value,
-                    stack: document.getElementById('projectStack').value,
-                    result: document.getElementById('projectResult').value
+                    modal_id: getFormElement('modalId').value,
+                    image_path: finalImagePath,
+                    category: getFormElement('category').value,
+                    title: getFormElement('title').value,
+                    desc: getFormElement('projectDesc').value,
+                    stack: getFormElement('projectStack').value,
+                    result: getFormElement('projectResult').value
                 };
 
+                // 5. Stream data array to serverless backend
                 const response = await fetch('/projects', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': token },
@@ -52,13 +67,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
 
                 if (response.ok) {
-                    alert('Project with structural asset securely injected into production schema!');
+                    alert('Data element securely injected into production schema!');
                     projectForm.reset();
                 } else {
-                    alert('Execution Rejected: Check matching authorization credentials.');
+                    alert(`Execution Rejected: ${response.status} - Verification signature failure.`);
                 }
             } catch (err) {
-                console.error("Factory Upload Error:", err);
+                console.error("Pipeline Validation Trace Exception:", err);
+                // This alert will tell you exactly which input element ID is missing or misspelled!
+                alert(err.message);
             }
         });
     }
