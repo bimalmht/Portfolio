@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enterprise Console | Bimal Mahato</title>
     <!-- Hardcoded Native CSS Fallbacks to run layout completely without external network scripts -->
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            background-color: #0b0f19; 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #0b0f19;
             color: #e2e8f0;
             display: flex;
             min-h: 100vh;
             min-height: 100vh;
         }
-        
+
         /* Layout Grid Structure */
         aside {
             width: 260px;
@@ -25,12 +31,14 @@
             flex-direction: column;
             shrink: 0;
         }
+
         main {
             flex: 1;
             display: flex;
             flex-direction: column;
             min-width: 0;
         }
+
         header {
             height: 80px;
             background-color: rgba(17, 24, 39, 0.8);
@@ -40,6 +48,7 @@
             align-items: center;
             padding: 0 32px;
         }
+
         .app-body {
             flex: 1;
             padding: 32px;
@@ -52,60 +61,310 @@
         }
 
         /* Branding and Navigation elements */
-        .brand-block { padding: 24px; border-bottom: 1px solid #1f2937; display: flex; align-items: center; gap: 12px; }
-        .logo-box { height: 36px; width: 36px; background: linear-gradient(to top right, #06b6d4, #2563eb); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; }
-        .brand-text h2 { font-size: 16px; color: white; font-weight: 700; }
-        .brand-text span { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
-        
-        nav { padding: 16px; display: flex; flex-direction: column; gap: 8px; }
-        nav a { display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: #94a3b8; font-size: 14px; text-decoration: none; border-radius: 8px; font-weight: 500; transition: all 0.2s; }
-        nav a.active { background-color: #1f2937; color: white; border: 1px solid rgba(255,255,255,0.05); }
-        nav a:hover:not(.active) { background-color: rgba(31, 41, 55, 0.5); color: #f1f5f9; }
+        .brand-block {
+            padding: 24px;
+            border-bottom: 1px solid #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-box {
+            height: 36px;
+            width: 36px;
+            background: linear-gradient(to top right, #06b6d4, #2563eb);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .brand-text h2 {
+            font-size: 16px;
+            color: white;
+            font-weight: 700;
+        }
+
+        .brand-text span {
+            font-size: 11px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: #94a3b8;
+            font-size: 14px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        nav a.active {
+            background-color: #1f2937;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        nav a:hover:not(.active) {
+            background-color: rgba(31, 41, 55, 0.5);
+            color: #f1f5f9;
+        }
 
         /* Security Token controls */
-        .status-pill { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; }
-        .dot { height: 8px; width: 8px; border-radius: 50%; background-color: #f59e0b; }
-        .gate-control { display: flex; align-items: center; gap: 8px; }
-        input[type="password"], input[type="text"] { background-color: #1f2937; border: 1px solid #374151; border-radius: 8px; padding: 10px 16px; color: white; font-size: 14px; outline: none; transition: border 0.2s; }
-        input:focus { border-color: #06b6d4; }
-        button { background: linear-gradient(to right, #0891b2, #2563eb); color: white; font-weight: 700; font-size: 14px; border: none; border-radius: 8px; padding: 10px 20px; cursor: pointer; transition: opacity 0.2s; }
-        button:hover { opacity: 0.9; }
+        .status-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+        }
+
+        .dot {
+            height: 8px;
+            width: 8px;
+            border-radius: 50%;
+            background-color: #f59e0b;
+        }
+
+        .gate-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        input[type="password"],
+        input[type="text"] {
+            background-color: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            padding: 10px 16px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+            transition: border 0.2s;
+        }
+
+        input:focus {
+            border-color: #06b6d4;
+        }
+
+        button {
+            background: linear-gradient(to right, #0891b2, #2563eb);
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
 
         /* Metric KPI Grid block Layout */
-        .kpi-row { display: grid; grid-template-cols: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .card-stat { background-color: #111827; border: 1px solid #1f2937; padding: 20px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; }
-        .card-stat p { font-size: 12px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
-        .card-stat h3 { font-size: 18px; color: white; font-weight: 700; margin-top: 4px; }
+        .kpi-row {
+            display: grid;
+            grid-template-cols: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card-stat {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            padding: 20px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-stat p {
+            font-size: 12px;
+            font-weight: 600;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-stat h3 {
+            font-size: 18px;
+            color: white;
+            font-weight: 700;
+            margin-top: 4px;
+        }
 
         /* Split Workspace layout column structure */
-        .workspace-matrix { display: grid; grid-template-cols: 1fr; gap: 32px; }
-        @media(min-width: 1024px) { .workspace-matrix { grid-template-cols: 380px 1fr; } }
-        
-        .panel-box { background-color: #111827; border: 1px solid #1f2937; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
-        .panel-header { padding: 20px; border-bottom: 1px solid #1f2937; background-color: #151c2c; }
-        .panel-header h2 { font-size: 16px; font-weight: 700; color: white; }
-        .panel-header p { font-size: 12px; color: #94a3b8; margin-top: 2px; }
-        
-        form { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
-        .form-group { display: flex; flex-direction: column; gap: 6px; }
-        .form-group label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; }
-        form button { padding: 14px; margin-top: 8px; }
+        .workspace-matrix {
+            display: grid;
+            grid-template-cols: 1fr;
+            gap: 32px;
+        }
+
+        @media(min-width: 1024px) {
+            .workspace-matrix {
+                grid-template-cols: 380px 1fr;
+            }
+        }
+
+        .panel-box {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-header {
+            padding: 20px;
+            border-bottom: 1px solid #1f2937;
+            background-color: #151c2c;
+        }
+
+        .panel-header h2 {
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .panel-header p {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        form {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+        }
+
+        form button {
+            padding: 14px;
+            margin-top: 8px;
+        }
 
         /* Dynamic messages box streams layout */
-        .log-stream { padding: 24px; display: flex; flex-direction: column; gap: 16px; max-height: 560px; overflow-y: auto; background-color: rgba(14, 19, 32, 0.4); min-height: 350px; }
-        .msg-card { background-color: rgba(31, 41, 55, 0.4); border: 1px solid #1f2937; padding: 20px; border-radius: 12px; display: flex; flex-direction: column; gap: 12px; }
-        .msg-meta { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid #1f2937; padding-bottom: 12px; }
-        .msg-user { display: flex; flex-direction: column; }
-        .msg-user .name { font-weight: 700; color: white; font-size: 15px; }
-        .msg-user .email { font-size: 13px; color: #06b6d4; font-family: monospace; margin-top: 2px; }
-        .msg-time { font-size: 11px; color: #64748b; font-family: monospace; background-color: #0b0f19; padding: 4px 8px; border-radius: 4px; border: 1px solid #1f2937; }
-        .msg-body { font-size: 14px; color: #cbd5e1; line-height: 1.6; white-space: pre-wrap; }
-        
+        .log-stream {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-height: 560px;
+            overflow-y: auto;
+            background-color: rgba(14, 19, 32, 0.4);
+            min-height: 350px;
+        }
+
+        .msg-card {
+            background-color: rgba(31, 41, 55, 0.4);
+            border: 1px solid #1f2937;
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .msg-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid #1f2937;
+            padding-bottom: 12px;
+        }
+
+        .msg-user {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .msg-user .name {
+            font-weight: 700;
+            color: white;
+            font-size: 15px;
+        }
+
+        .msg-user .email {
+            font-size: 13px;
+            color: #06b6d4;
+            font-family: monospace;
+            margin-top: 2px;
+        }
+
+        .msg-time {
+            font-size: 11px;
+            color: #64748b;
+            font-family: monospace;
+            background-color: #0b0f19;
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid #1f2937;
+        }
+
+        .msg-body {
+            font-size: 14px;
+            color: #cbd5e1;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
         /* Utility state placeholders descriptors */
-        .placeholder-text { text-align: center; padding: 48px 24px; color: #64748b; font-size: 14px; font-style: italic; }
-        svg { vertical-align: middle; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .placeholder-text {
+            text-align: center;
+            padding: 48px 24px;
+            color: #64748b;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        svg {
+            vertical-align: middle;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
     </style>
 </head>
+
 <body>
 
     <!-- 1. SIDEBAR CONTAINER -->
@@ -119,11 +378,17 @@
         </div>
         <nav>
             <a href="#" class="active">
-                <svg width="18" height="18" viewBox="0 0 24 24"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 012-2h2a2 2 0 012 2v10a2 2 0 012-2h2a2 2 0 012 2H4a2 2 0 01-2-2V6z"></path></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24">
+                    <path
+                        d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 012-2h2a2 2 0 012 2v10a2 2 0 012-2h2a2 2 0 012 2H4a2 2 0 01-2-2V6z">
+                    </path>
+                </svg>
                 Control Center
             </a>
             <a href="/" target="_blank">
-                <svg width="18" height="18" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24">
+                    <path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                </svg>
                 View Live Site
             </a>
         </nav>
@@ -190,6 +455,24 @@
                             <label>Public Visual Title</label>
                             <input type="text" id="title" placeholder="e.g., Business Intelligence" required>
                         </div>
+
+                        <div class="form-group">
+                            <label>Project Deep Case Description</label>
+                            <textarea id="projectDesc" rows="4"
+                                placeholder="Detailed case study explanation and operational overview..." required
+                                style="background-color: #1f2937; border: 1px solid #374151; border-radius: 8px; padding: 10px 16px; color: white; font-size: 14px; outline: none; transition: border 0.2s; font-family: inherit; resize: vertical;"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Technology Stack (Comma-Separated)</label>
+                            <input type="text" id="projectStack" placeholder="e.g., Power BI, DAX, Python, Cloudflare"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label>Measurable Core Result</label>
+                            <input type="text" id="projectResult"
+                                placeholder="e.g., Enhanced decision speed by 40% or 90% completion rate" required>
+                        </div>
+
                         <button type="submit">Inject Row Matrix</button>
                     </form>
                 </div>
@@ -201,7 +484,8 @@
                         <p>Asynchronous client logs extracted out of SQLite.</p>
                     </div>
                     <div id="messagesContainer" class="log-stream">
-                        <p class="placeholder-text">Provide an encryption verification token payload to unlock pipeline data objects.</p>
+                        <p class="placeholder-text">Provide an encryption verification token payload to unlock pipeline
+                            data objects.</p>
                     </div>
                 </div>
             </div>
@@ -211,4 +495,5 @@
     <!-- Execute script file connection -->
     <script src="/admin-core.js"></script>
 </body>
+
 </html>

@@ -1,66 +1,55 @@
-const projects = {
-  datalake: {
-    title: "Nepal's First Data Lake",
-    category: "Data Architecture",
-    desc: "Implemented a centralized Data Lake for optimized data management, making us the first company in Nepal to achieve this scale of data orchestration.",
-    // Match your folder name and filename exactly:
-    image: "url('images/datalake icon.png')",
-    stack: ["SQL", "Data Lake", "Python"],
-    result: "90% CR completion rate"
-  },
-  rgm: {
-    title: "RGM Reporting Dashboards",
-    category: "Analytics",
-    desc: "Developed Power BI dashboards for Revenue Growth Management, providing real-time insights into market trends and performance.",
-    image: "url('images/PowerBI.png')",
-    stack: ["Power BI", "DAX", "RGM"],
-    result: "Enhanced decision speed"
-  }
-};
+// ==========================================
+// DYNAMIC MODAL & PORTFOLIO ENGINE
+// ==========================================
+
+// Global cache array to hold fetched projects from D1
+let dynamicProjectsCache = [];
 
 function openModal(projectId) {
-  // 1. Safe lookup from your hardcoded array
-  let data = (typeof projects !== 'undefined') ? projects[projectId] : null;
+  // Find the clicked item right out of our D1 database cache
+  const data = dynamicProjectsCache.find(project => project.modal_id === projectId);
 
-  // 2. DYNAMIC BACKEND FALLBACK: If the card clicked belongs to a new project from your database
+  // Fallback layout protection if the project isn't found for some reason
   if (!data) {
-    // Fallback layout template so new admin-added items open safely with complete properties
-    data = {
-      title: "Dynamic Project Case Study",
-      category: "Analytics & Systems Strategy",
-      desc: "This custom analytics dashboard and tracking architecture was deployed directly using your secure cloud administrative factory panel.",
-      result: "Fully integrated operational workflows across the Nepalese digital enterprise sector.",
-      image: "/images/PowerBI.png", // Default image handler safely un-wrapped
-      stack: ["Cloudflare Mesh", "D1 SQL Engine", "Serverless Edge Workers"]
-    };
+    console.error(`Project data not found for ID: ${projectId}`);
+    return;
   }
 
-  // 3. Populate standard HTML text nodes safely
+  // 1. Populate standard HTML text nodes dynamically from the D1 row
   document.getElementById('modalTitle').innerText = data.title || "Case Study Review";
   document.getElementById('modalCategory').innerText = data.category || "Analytics";
-  document.getElementById('modalDescription').innerText = data.desc || "";
-  document.getElementById('modalResult').innerText = data.result || "";
+  document.getElementById('modalDescription').innerText = data.desc || "No description provided.";
+  document.getElementById('modalResult').innerText = data.result || "Case study under review.";
 
-  // 4. Handle the specific layout image rendering rules safely
-  let imagePath = "/images/PowerBI.png"; // baseline safety default
-  if (data.image) {
-    imagePath = data.image.replace("url('", "").replace("')", "");
+  // 2. Handle the specific layout image rendering rules safely
+  let imagePath = "/images/PowerBI.png"; // your baseline safety default
+  if (data.image_path) {
+    // If your DB string ever contains url('...'), clean it. Otherwise, use it directly.
+    imagePath = data.image_path.replace("url('", "").replace("')", "");
   }
   const imgTag = document.getElementById('modalImgTag');
   if (imgTag) imgTag.src = imagePath;
 
-  // 5. Clean and render tech tags without breaking
+  // 3. Clean and render tech tags splitting your D1 text string dynamically
   const stackContainer = document.getElementById('modalStack');
   if (stackContainer) {
     stackContainer.innerHTML = '';
-    if (Array.isArray(data.stack)) {
-      data.stack.forEach(tech => {
-        stackContainer.innerHTML += `<span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">${tech}</span>`;
+
+    if (data.stack) {
+      // Handles both an array format or a comma-separated string seamlessly
+      const tagsArray = Array.isArray(data.stack)
+        ? data.stack
+        : data.stack.split(',').map(tech => tech.trim());
+
+      tagsArray.forEach(tech => {
+        if (tech) {
+          stackContainer.innerHTML += `<span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">${tech}</span>`;
+        }
       });
     }
   }
 
-  // 6. SHOW THE MODAL CONTAINER SEAMLESSLY
+  // 4. SHOW THE MODAL CONTAINER SEAMLESSLY
   const modal = document.getElementById('projectModal');
   if (modal) {
     modal.classList.remove('hidden');
@@ -68,10 +57,12 @@ function openModal(projectId) {
   }
 }
 
-
 function closeModal() {
-  document.getElementById('projectModal').classList.add('hidden');
-  document.getElementById('projectModal').classList.remove('flex');
+  const modal = document.getElementById('projectModal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
 }
 function updateAvailability() {
   const now = new Date();
@@ -183,13 +174,13 @@ async function loadDynamicProjects() {
     const response = await fetch("/projects");
     if (!response.ok) throw new Error("Failed to retrieve projects");
 
-    const projects = await response.json();
+    dynamicProjectsCache = await response.json();
 
     // 2. Clear out the fallback loading text safely
     container.innerHTML = "";
 
     // 3. Loop through database rows and generate structural templates
-    projects.forEach((project) => {
+    dynamicProjectsCache.forEach((project) => {
       container.innerHTML += `
         <div onclick="openModal('${project.modal_id}')"
             class="group cursor-pointer bg-slate-50 rounded-[2rem] overflow-hidden border border-slate-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">

@@ -17,7 +17,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 modal_id: document.getElementById('modalId').value,
                 image_path: document.getElementById('imagePath').value,
                 category: document.getElementById('category').value,
-                title: document.getElementById('title').value
+                title: document.getElementById('title').value,
+                // --- NEW DYNAMIC MODAL FIELDS ADDED HERE ---
+                desc: document.getElementById('projectDesc').value,
+                stack: document.getElementById('projectStack').value, // Will be parsed as a string (e.g., "SQL, Python")
+                result: document.getElementById('projectResult').value
             };
 
             try {
