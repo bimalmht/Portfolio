@@ -7,24 +7,44 @@
 document.addEventListener("DOMContentLoaded", () => {
     const projectForm = document.getElementById('projectForm');
     
-    // Form Processing Submitter Interceptor
     if (projectForm) {
         projectForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const token = document.getElementById('adminToken').value;
             
-            const payload = {
-                modal_id: document.getElementById('modalId').value,
-                image_path: document.getElementById('imagePath').value,
-                category: document.getElementById('category').value,
-                title: document.getElementById('title').value,
-                // --- NEW DYNAMIC MODAL FIELDS ADDED HERE ---
-                desc: document.getElementById('projectDesc').value,
-                stack: document.getElementById('projectStack').value, // Will be parsed as a string (e.g., "SQL, Python")
-                result: document.getElementById('projectResult').value
-            };
+            const fileInput = document.getElementById('imageFile');
+            const file = fileInput.files[0];
+            
+            // Helper function to read file asynchronously as a Base64 string
+            const toBase64 = file => new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
 
             try {
+                let finalImagePath = "";
+                
+                if (file) {
+                    // Check file size (Optional: alert user if it exceeds 1MB to prevent D1 storage bloat)
+                    if (file.size > 1024 * 1024) { 
+                        alert("Image is too large. Please compress your image below 1MB.");
+                        return;
+                    }
+                    finalImagePath = await toBase64(file); // This converts file to "data:image/png;base64,iVBORw..."
+                }
+
+                const payload = {
+                    modal_id: document.getElementById('modalId').value,
+                    image_path: finalImagePath, // Sending the full Base64 string to your projects.js API
+                    category: document.getElementById('category').value,
+                    title: document.getElementById('title').value,
+                    desc: document.getElementById('projectDesc').value,
+                    stack: document.getElementById('projectStack').value,
+                    result: document.getElementById('projectResult').value
+                };
+
                 const response = await fetch('/projects', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': token },
@@ -32,18 +52,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
 
                 if (response.ok) {
-                    alert('Data element securely injected into production schema!');
+                    alert('Project with structural asset securely injected into production schema!');
                     projectForm.reset();
-                    
-                    // Pro Tip: Force update the homepage project cache if needed
-                    if (typeof loadDashboardData === "function" && document.getElementById('systemStatusText').innerText === "Pipeline Authorized") {
-                        loadDashboardData();
-                    }
                 } else {
                     alert('Execution Rejected: Check matching authorization credentials.');
                 }
             } catch (err) {
-                console.error("Factory Error:", err);
+                console.error("Factory Upload Error:", err);
             }
         });
     }

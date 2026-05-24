@@ -50,11 +50,12 @@ export async function onRequestPost(context) {
     }
 
     // Auto-correct image path formats if typed with a relative dot by accident
-    if (image_path.startsWith('./')) {
+    /*if (image_path.startsWith('./')) {
       image_path = image_path.substring(1);
     } else if (!image_path.startsWith('/')) {
       image_path = '/' + image_path;
     }
+    */
 
     // CHANGED: Extended structural SQL insertion logic to register the 3 missing items 
     await env.DB.prepare(
