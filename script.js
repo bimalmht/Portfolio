@@ -206,3 +206,124 @@ async function loadDynamicProjects() {
 
 // Fire the fetching hook as soon as the DOM tree loads
 document.addEventListener("DOMContentLoaded", loadDynamicProjects);
+
+// ==========================================
+// INTERACTIVE ANTIGRAVITY ENGINE BACKGROUND
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.getElementById('home');
+  
+  if (container) {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'antigravity-canvas';
+    
+    // Absolute layout abstraction tracking parent coordinates
+    canvas.style.position = 'absolute';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.zIndex = '0';
+    canvas.style.pointerEvents = 'none'; // Keeps interactive text blocks and CTA links responsive
+
+    container.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    const mouse = { x: null, y: null, radius: 140 };
+
+    function resizeCanvas() {
+      canvas.width = container.offsetWidth;
+      canvas.height = container.offsetHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Track cursor vectors crossing the container layer
+    container.addEventListener('mousemove', (e) => {
+      const rect = container.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+    });
+
+    container.addEventListener('mouseleave', () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 1;
+        this.vx = (Math.random() - 0.5) * 0.6;
+        this.vy = (Math.random() - 0.5) * 0.6;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+
+        // Interactive mouse tracking node logic
+        if (mouse.x !== null && mouse.y !== null) {
+          let dx = mouse.x - this.x;
+          let dy = mouse.y - this.y;
+          let distance = Math.hypot(dx, dy);
+          if (distance < mouse.radius) {
+            this.x -= dx * 0.02;
+            this.y -= dy * 0.02;
+          }
+        }
+      }
+      draw() {
+        // Dynamic lighting rules checking document mode configuration runtime matrices
+        ctx.fillStyle = document.documentElement.classList.contains('dark') 
+          ? 'rgba(6, 182, 212, 0.4)' 
+          : 'rgba(14, 165, 233, 0.3)';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function init() {
+      particles = [];
+      const particleCount = Math.min(80, Math.floor((canvas.width * canvas.height) / 9000));
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+    }
+    init();
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      const isDark = document.documentElement.classList.contains('dark');
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+        
+        // Link engine calculating node distances to draw fine mesh vectors
+        for (let j = i + 1; j < particles.length; j++) {
+          let dx = particles[i].x - particles[j].x;
+          let dy = particles[i].y - particles[j].y;
+          let dist = Math.hypot(dx, dy);
+          
+          if (dist < 110) {
+            ctx.strokeStyle = isDark 
+              ? `rgba(6, 182, 212, ${0.15 * (1 - dist/110)})` 
+              : `rgba(14, 165, 233, ${0.12 * (1 - dist/110)})`;
+            ctx.lineWidth = 0.8;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+  }
+});
