@@ -212,11 +212,11 @@ document.addEventListener("DOMContentLoaded", loadDynamicProjects);
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('home');
-  
+
   if (container) {
     const canvas = document.createElement('canvas');
     canvas.id = 'antigravity-canvas';
-    
+
     // Absolute layout abstraction tracking parent coordinates
     canvas.style.position = 'absolute';
     canvas.style.top = '0';
@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
       update() {
         this.x += this.vx;
         this.y += this.vy;
-        
+
         if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
         if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
 
@@ -278,8 +278,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       draw() {
         // Dynamic lighting rules checking document mode configuration runtime matrices
-        ctx.fillStyle = document.documentElement.classList.contains('dark') 
-          ? 'rgba(6, 182, 212, 0.4)' 
+        ctx.fillStyle = document.documentElement.classList.contains('dark')
+          ? 'rgba(6, 182, 212, 0.4)'
           : 'rgba(14, 165, 233, 0.3)';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -298,22 +298,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
+
       const isDark = document.documentElement.classList.contains('dark');
       for (let i = 0; i < particles.length; i++) {
         particles[i].update();
         particles[i].draw();
-        
+
         // Link engine calculating node distances to draw fine mesh vectors
         for (let j = i + 1; j < particles.length; j++) {
           let dx = particles[i].x - particles[j].x;
           let dy = particles[i].y - particles[j].y;
           let dist = Math.hypot(dx, dy);
-          
+
           if (dist < 110) {
-            ctx.strokeStyle = isDark 
-              ? `rgba(6, 182, 212, ${0.15 * (1 - dist/110)})` 
-              : `rgba(14, 165, 233, ${0.12 * (1 - dist/110)})`;
+            ctx.strokeStyle = isDark
+              ? `rgba(6, 182, 212, ${0.15 * (1 - dist / 110)})`
+              : `rgba(14, 165, 233, ${0.12 * (1 - dist / 110)})`;
             ctx.lineWidth = 0.8;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
@@ -330,75 +330,86 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Add this inside your public script.js file
 document.addEventListener("DOMContentLoaded", () => {
-    // Silently notify the D1 backend database of a new page impression
-    fetch('/api/analytics', { method: 'POST' }).catch(err => console.log("Analytics muted."));
+  // Silently notify the D1 backend database of a new page impression
+  fetch('/api/analytics', { method: 'POST' }).catch(err => console.log("Analytics muted."));
 });
 
-// PUBLIC TRAFFIC GRAPH ENGINE
+// ==========================================
+// REWRITTEN PUBLIC TRAFFIC GRAPH ENGINE
 // ==========================================
 async function renderPublicTrafficGraph() {
-    const ctx = document.getElementById('publicTrafficChart');
-    if (!ctx) return;
+  const ctx = document.getElementById('publicTrafficChart');
+  if (!ctx) {
+    console.error("❌ Analytics Error: Could not find element #publicTrafficChart in HTML.");
+    return;
+  }
 
-    try {
-        const response = await fetch('/api/public-analytics');
-        if (!response.ok) throw new Error(`HTTP Error Status: ${response.status}`);
-        
-        const data = await response.json();
-        
-        // --- TEST LOGGER ---
-        console.log("📊 Public Analytics Payload Received:", data);
+  try {
+    console.log("📡 Attempting connection fetch to /api/public-analytics...");
+    const response = await fetch('/api/public-analytics');
 
-        if (!data || data.length === 0) {
-            console.warn("⚠️ Analytics array is completely empty. Graph rendering bypassed.");
-            // Optional: Draw a temporary visual notice so you know the pipeline is empty
-            ctx.parentElement.innerHTML = `<p style="color:#64748b; text-align:center; padding-top:100px; font-style:italic;">Awaiting initial traffic logs to compile telemetry...</p>`;
-            return;
-        }
-
-        const labels = data.map(item => {
-            const dateObj = new Date(item.date);
-            return dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
-        });
-        const counts = data.map(item => item.count);
-
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Daily Impressions',
-                    data: counts,
-                    borderColor: '#06b6d4',
-                    backgroundColor: 'rgba(6, 182, 212, 0.05)',
-                    borderWidth: 3,
-                    tension: 0.3,
-                    pointBackgroundColor: '#06b6d4',
-                    pointHoverRadius: 6,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    y: {
-                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                        ticks: { color: '#64748b', stepSize: 1, beginAtZero: true }
-                    },
-                    x: {
-                        grid: { display: false },
-                        ticks: { color: '#64748b' }
-                    }
-                }
-            }
-        });
-    } catch (err) {
-        console.error("❌ Public Graph Engine Crashed:", err);
+    if (!response.ok) {
+      throw new Error(`HTTP Endpoint Connection Error: Status ${response.status}`);
     }
+
+    const data = await response.json();
+    console.log("📊 Public Analytics Payload Received:", data);
+
+    if (!data || data.length === 0) {
+      ctx.parentElement.innerHTML = `<p style="color:#64748b; text-align:center; padding-top:100px; font-style:italic; font-size: 14px;">Awaiting initial traffic logs to compile telemetry matrix...</p>`;
+      return;
+    }
+
+    const labels = data.map(item => {
+      const dateObj = new Date(item.date);
+      return dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+    });
+    const counts = data.map(item => item.count);
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Daily Impressions',
+          data: counts,
+          borderColor: '#06b6d4',
+          backgroundColor: 'rgba(6, 182, 212, 0.05)',
+          borderWidth: 3,
+          tension: 0.3,
+          pointBackgroundColor: '#06b6d4',
+          pointHoverRadius: 6,
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: {
+            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+            ticks: { color: '#64748b', stepSize: 1, beginAtZero: true }
+          },
+          x: {
+            grid: { display: false },
+            ticks: { color: '#64748b' }
+          }
+        }
+      }
+    });
+  } catch (err) {
+    console.error("❌ Public Graph Engine Crashed:", err);
+  }
+}
+
+// BULLETPROOF TRIGGER ENGINE: Fires if DOMContentLoaded already passed
+if (document.readyState === "complete" || document.readyState === "interactive") {
+  renderPublicTrafficGraph();
+} else {
+  window.addEventListener("load", renderPublicTrafficGraph);
 }
 
 // Hook into your existing layout lifecycle event loader
