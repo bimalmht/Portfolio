@@ -333,3 +333,65 @@ document.addEventListener("DOMContentLoaded", () => {
     // Silently notify the D1 backend database of a new page impression
     fetch('/api/analytics', { method: 'POST' }).catch(err => console.log("Analytics muted."));
 });
+// ==========================================
+// PUBLIC TRAFFIC GRAPH ENGINE
+// ==========================================
+async function renderPublicTrafficGraph() {
+    const ctx = document.getElementById('publicTrafficChart');
+    if (!ctx) return;
+
+    try {
+        const response = await fetch('/api/public-analytics');
+        if (!response.ok) throw new Error("Metrics offline");
+        
+        const data = await response.json();
+
+        // Map database strings to labels
+        const labels = data.map(item => {
+            // Converts YYYY-MM-DD to a shorter friendly presentation string (e.g., "May 27")
+            const dateObj = new Date(item.date);
+            return dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+        });
+        const counts = data.map(item => item.count);
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Daily Impressions',
+                    data: counts,
+                    borderColor: '#06b6d4', // Matches your custom cyan branding color accents
+                    backgroundColor: 'rgba(6, 182, 212, 0.05)',
+                    borderWidth: 3,
+                    tension: 0.3, // Curve smoothing interpolation factor
+                    pointBackgroundColor: '#06b6d4',
+                    pointHoverRadius: 6,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#64748b', stepSize: 1 }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#64748b' }
+                    }
+                }
+            }
+        });
+    } catch (err) {
+        console.log("Analytics display bypassed:", err);
+    }
+}
+
+// Hook into your existing layout lifecycle event loader
+document.addEventListener("DOMContentLoaded", renderPublicTrafficGraph);
