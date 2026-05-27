@@ -327,3 +327,9 @@ document.addEventListener('DOMContentLoaded', () => {
     animate();
   }
 });
+
+// Add this inside your public script.js file
+document.addEventListener("DOMContentLoaded", () => {
+    // Silently notify the D1 backend database of a new page impression
+    fetch('/api/analytics', { method: 'POST' }).catch(err => console.log("Analytics muted."));
+});

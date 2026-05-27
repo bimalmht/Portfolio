@@ -363,6 +363,7 @@
             stroke-linejoin: round;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -432,80 +433,39 @@
 
             <!-- LOWER DATA CONSOLE TABLES -->
             <div class="workspace-matrix">
-                <!-- FORM -->
+
                 <div class="panel-box">
                     <div class="panel-header">
                         <h2>Deployment Factory</h2>
                         <p>Publish rows into homepage container slots.</p>
                     </div>
-                    <div class="panel-header">
-                        <h2>Production Elements Schema</h2>
-                        <p>Active live project indexes drawing straight from D1 cloud architecture nodes.</p>
-                    </div>
-                    <div style="padding: 24px; overflow-x: auto;">
-                        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px;">
-                            <thead>
-                                <tr style="border-bottom: 2px solid #1f2937; color: #94a3b8;">
-                                    <th style="padding: 12px 8px;">Title</th>
-                                    <th style="padding: 12px 8px;">Category</th>
-                                    <th style="padding: 12px 8px; text-align: right;">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="adminProjectsTableBody">
-                            </tbody>
-                        </table>
-                    </div>
                     <form id="projectForm">
-                        <div class="form-group">
-                            <label>System Reference ID</label>
-                            <input type="text" id="modalId" placeholder="e.g., neural-mesh" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Upload Project Visual Asset (PNG, JPG)</label>
-                            <input type="file" id="imageFile" accept="image/*" required
-                                style="background-color: #1f2937; border: 1px solid #374151; border-radius: 8px; padding: 10px 16px; color: white; font-size: 14px; outline: none; cursor: pointer;">
-                        </div>
-                        <div class="form-group">
-                            <label>Core Classification Discipline</label>
-                            <input type="text" id="category" placeholder="e.g., Predictive Analytics" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Public Visual Title</label>
-                            <input type="text" id="title" placeholder="e.g., Business Intelligence" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Project Deep Case Description</label>
-                            <textarea id="projectDesc" rows="4"
-                                placeholder="Detailed case study explanation and operational overview..." required
-                                style="background-color: #1f2937; border: 1px solid #374151; border-radius: 8px; padding: 10px 16px; color: white; font-size: 14px; outline: none; transition: border 0.2s; font-family: inherit; resize: vertical;"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Technology Stack (Comma-Separated)</label>
-                            <input type="text" id="projectStack" placeholder="e.g., Power BI, DAX, Python, Cloudflare"
-                                required>
-                        </div>
-                        <div class="form-group">
-                            <label>Measurable Core Result</label>
-                            <input type="text" id="projectResult"
-                                placeholder="e.g., Enhanced decision speed by 40% or 90% completion rate" required>
-                        </div>
-
-                        <button type="submit">Inject Row Matrix</button>
                     </form>
                 </div>
 
-                <!-- MESSAGES STREAM VIEWER -->
-                <div class="panel-box">
-                    <div class="panel-header">
-                        <h2>Transaction Activity Queue</h2>
-                        <p>Asynchronous client logs extracted out of SQLite.</p>
+                <div>
+                    <div class="panel-box" style="margin-bottom: 32px; padding: 24px;">
+                        <div class="panel-header" style="padding: 0 0 20px 0; background: transparent;">
+                            <h2>Traffic Metric Telemetry</h2>
+                            <p>Live, privacy-first historical views tracing application nodes.</p>
+                        </div>
+                        <div style="position: relative; height: 280px; width: 100%;">
+                            <canvas id="trafficChart"></canvas>
+                        </div>
                     </div>
-                    <div id="messagesContainer" class="log-stream">
-                        <p class="placeholder-text">Provide an encryption verification token payload to unlock pipeline
-                            data objects.</p>
+
+                    <div class="panel-box">
+                        <div class="panel-header">
+                            <h2>Transaction Activity Queue</h2>
+                            <p>Asynchronous client logs extracted out of SQLite.</p>
+                        </div>
+                        <div id="messagesContainer" class="log-stream">
+                            <p class="placeholder-text">Provide an encryption verification token payload to unlock
+                                pipeline data objects.</p>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </main>

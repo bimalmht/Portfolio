@@ -133,6 +133,8 @@ async function loadDashboardData() {
         // TRIGGER YOUR NEW PROJECTS TABLE MANAGEMENT
         // ==========================================
         loadAdminProjectsTable();
+        // --- HOT RELOAD YOUR LIVE TIME-SERIES LINE GRAPH ---
+        loadTrafficAnalyticsGraph();
 
         if (messages.length === 0) {
             container.innerHTML = `
@@ -269,5 +271,68 @@ async function deleteProjectNode(modalId) {
         }
     } catch (err) {
         console.error(err);
+    }
+}
+let currentTrafficChart = null;
+
+async function loadTrafficAnalyticsGraph() {
+    const token = document.getElementById('adminToken').value;
+    const ctx = document.getElementById('trafficChart');
+    if (!ctx) return;
+
+    try {
+        const response = await fetch('/api/analytics', {
+            headers: { 'Authorization': token }
+        });
+
+        if (!response.ok) throw new Error("Unauthorized graph download access.");
+        const data = await response.json(); // Array of format: [{date: "2026-05-25", count: 42}]
+
+        // Extract clean labels and values
+        const labels = data.map(item => item.date);
+        const counts = data.map(item => item.count);
+
+        // If a chart instance already exists, destroy it before rebuilding to prevent canvas overlap glitches
+        if (currentTrafficChart) {
+            currentTrafficChart.destroy();
+        }
+
+        // Build the Chart.js instance with neon accents matching your UI styling rules
+        currentTrafficChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Unique Daily Visits',
+                    data: counts,
+                    borderColor: '#06b6d4', // Cyan theme accent matching your layout buttons
+                    backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.3, // Adds smooth curvature styles to your metrics grid path lines
+                    pointBackgroundColor: '#2563eb',
+                    pointBorderColor: '#fff',
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false } // Keeping layout clean
+                },
+                scales: {
+                    y: {
+                        grid: { color: '#1f2937' },
+                        ticks: { color: '#94a3b8', stepSize: 1 }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    } catch (err) {
+        console.error("Graph Builder Exception:", err);
     }
 }
