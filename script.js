@@ -333,7 +333,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Silently notify the D1 backend database of a new page impression
     fetch('/api/analytics', { method: 'POST' }).catch(err => console.log("Analytics muted."));
 });
-// ==========================================
+
 // PUBLIC TRAFFIC GRAPH ENGINE
 // ==========================================
 async function renderPublicTrafficGraph() {
@@ -342,13 +342,21 @@ async function renderPublicTrafficGraph() {
 
     try {
         const response = await fetch('/api/public-analytics');
-        if (!response.ok) throw new Error("Metrics offline");
+        if (!response.ok) throw new Error(`HTTP Error Status: ${response.status}`);
         
         const data = await response.json();
+        
+        // --- TEST LOGGER ---
+        console.log("📊 Public Analytics Payload Received:", data);
 
-        // Map database strings to labels
+        if (!data || data.length === 0) {
+            console.warn("⚠️ Analytics array is completely empty. Graph rendering bypassed.");
+            // Optional: Draw a temporary visual notice so you know the pipeline is empty
+            ctx.parentElement.innerHTML = `<p style="color:#64748b; text-align:center; padding-top:100px; font-style:italic;">Awaiting initial traffic logs to compile telemetry...</p>`;
+            return;
+        }
+
         const labels = data.map(item => {
-            // Converts YYYY-MM-DD to a shorter friendly presentation string (e.g., "May 27")
             const dateObj = new Date(item.date);
             return dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
         });
@@ -361,10 +369,10 @@ async function renderPublicTrafficGraph() {
                 datasets: [{
                     label: 'Daily Impressions',
                     data: counts,
-                    borderColor: '#06b6d4', // Matches your custom cyan branding color accents
+                    borderColor: '#06b6d4',
                     backgroundColor: 'rgba(6, 182, 212, 0.05)',
                     borderWidth: 3,
-                    tension: 0.3, // Curve smoothing interpolation factor
+                    tension: 0.3,
                     pointBackgroundColor: '#06b6d4',
                     pointHoverRadius: 6,
                     fill: true
@@ -379,7 +387,7 @@ async function renderPublicTrafficGraph() {
                 scales: {
                     y: {
                         grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                        ticks: { color: '#64748b', stepSize: 1 }
+                        ticks: { color: '#64748b', stepSize: 1, beginAtZero: true }
                     },
                     x: {
                         grid: { display: false },
@@ -389,7 +397,7 @@ async function renderPublicTrafficGraph() {
             }
         });
     } catch (err) {
-        console.log("Analytics display bypassed:", err);
+        console.error("❌ Public Graph Engine Crashed:", err);
     }
 }
 
